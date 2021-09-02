@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css?family=Space+Mono");
+
+* {
+  box-sizing: border-box;
+}
+
+.calculator {
+  max-width: 350px;
+  margin: 100px auto;
+}
+
+.calculator-numbers {
+  font-family: "Space Mono", serif;
+  width: 100%;
+  font-size: 2em;
+  text-align: right;
+}
+
+.calculator-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 0;
+}
+
+.span-2 {
+  grid-column: span 2;
+}
+.span-3 {
+  grid-column: span 3;
+}
