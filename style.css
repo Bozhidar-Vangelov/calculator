@@ -16,6 +16,7 @@
     rgba(5, 255, 0, 1) 35%,
     rgba(255, 244, 0, 1) 100%
   );
+  border: 2px solid black;
 }
 
 .calculator-numbers {
