@@ -3,6 +3,7 @@ const numbers = Array.from(document.querySelectorAll(".num"));
 const operators = Array.from(document.querySelectorAll(".operator"));
 const clearButton = document.getElementById("clear");
 const equalButton = document.getElementById("equal");
+const backButton = document.getElementById("back");
 
 let firstNum = 0;
 let secondNum = 0;
@@ -55,6 +56,10 @@ function resultHanlder() {
   displayNumber.value = operate(operator, firstNum, secondNum);
 }
 
+function backHandler() {
+  let display = displayNumber.value;
+  displayNumber.value = displayNumber.value.substring(0, display.length - 1);
+}
 
 function add(firstNum, secondNum) {
   return firstNum + secondNum;
