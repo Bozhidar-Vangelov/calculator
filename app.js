@@ -52,7 +52,11 @@ function operatorHandler(e) {
 }
 
 function resultHanlder() {
-  secondNum = displayNumber.value;
+  secondNum = Number(displayNumber.value);
+  if (typeof secondNum !== "number") {
+    secondNum = 0;
+  }
+
   displayNumber.value = operate(operator, firstNum, secondNum);
 }
 
