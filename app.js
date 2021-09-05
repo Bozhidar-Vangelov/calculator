@@ -1,24 +1,39 @@
 const displayNumber = document.querySelector(".calculator-numbers");
 const numbers = Array.from(document.querySelectorAll(".num"));
 const operators = Array.from(document.querySelectorAll(".operator"));
-const clearButton = document.querySelector(".span-2");
+const clearButton = document.getElementById("clear");
+const equalButton = document.getElementById("equal");
+
+let firstNum = 0;
+let secondNum = 0;
+let operator = undefined;
 
 numbers.forEach((number) => {
   number.addEventListener("click", numberHandler);
 });
 
 operators.forEach((operator) => {
-  operator.addEventListener("click", operate);
+  operator.addEventListener("click", operatorHandler);
 });
 
 clearButton.addEventListener("click", clearHandler);
+
+equalButton.addEventListener("click", resultHanlder);
+
+backButton.addEventListener("click", backHandler);
 
 function clearHandler() {
   displayNumber.value = 0;
 }
 
 function numberHandler(e) {
-  if (displayNumber.value === "0") {
+  if (
+    displayNumber.value === "0" ||
+    displayNumber.value === "+" ||
+    displayNumber.value === "-" ||
+    displayNumber.value === "÷" ||
+    displayNumber.value === "x"
+  ) {
     resetDisplay();
   }
   displayNumber.value += e.target.textContent;
@@ -27,6 +42,19 @@ function numberHandler(e) {
 function resetDisplay() {
   displayNumber.value = "";
 }
+
+function operatorHandler(e) {
+  firstNum = displayNumber.value;
+
+  operator = e.target.textContent;
+  displayNumber.value = operator;
+}
+
+function resultHanlder() {
+  secondNum = displayNumber.value;
+  displayNumber.value = operate(operator, firstNum, secondNum);
+}
+
 
 function add(firstNum, secondNum) {
   return firstNum + secondNum;
@@ -50,16 +78,12 @@ function operate(operator, firstNum, secondNum) {
 
   switch (operator) {
     case "+":
-      displayNumber.value = "+";
       return add(firstNum, secondNum);
     case "-":
-      displayNumber.value = "-";
       return subtract(firstNum, secondNum);
     case "x":
-      displayNumber.value = "x";
       return multiply(firstNum, secondNum);
     case "÷":
-      displayNumber.value = "÷";
       return divide(firstNum, secondNum);
   }
 }
