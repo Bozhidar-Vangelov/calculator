@@ -28,6 +28,7 @@ equalButton.addEventListener("click", resultHandler);
 backButton.addEventListener("click", backHandler);
 
 function clearHandler() {
+  result.value = "";
   userInput.value = 0;
   firstNum = 0;
   secondNum = 0;
@@ -55,6 +56,8 @@ function operatorHandler(operatorInput) {
   firstNum = Number(userInput.value);
   console.log(firstNum);
   operator = operatorInput;
+  result.value = `${firstNum}${operator}`;
+
   console.log(operator);
   isReset = true;
 }
@@ -71,6 +74,7 @@ function resultHandler() {
 
   secondNum = userInput.value;
   userInput.value = operate(operator, firstNum, secondNum);
+  result.value = `${firstNum}${operator}${secondNum}=`;
   operator = undefined;
   console.log(operator + "resultHandler");
 }
