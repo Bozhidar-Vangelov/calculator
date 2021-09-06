@@ -1,4 +1,5 @@
-const displayNumber = document.querySelector(".calculator-numbers");
+const userInput = document.getElementById("user-input");
+const result = document.getElementById("result");
 const numbers = Array.from(document.querySelectorAll(".num"));
 const operators = Array.from(document.querySelectorAll(".operator"));
 const clearButton = document.getElementById("clear");
@@ -8,61 +9,81 @@ const backButton = document.getElementById("back");
 let firstNum = 0;
 let secondNum = 0;
 let operator = undefined;
+let isReset = false;
 
 numbers.forEach((number) => {
   number.addEventListener("click", numberHandler);
 });
 
 operators.forEach((operator) => {
-  operator.addEventListener("click", operatorHandler);
+  operator.addEventListener("click", () =>
+    operatorHandler(operator.textContent)
+  );
 });
 
 clearButton.addEventListener("click", clearHandler);
 
-equalButton.addEventListener("click", resultHanlder);
+equalButton.addEventListener("click", resultHandler);
 
 backButton.addEventListener("click", backHandler);
 
 function clearHandler() {
-  displayNumber.value = 0;
+  userInput.value = 0;
+  firstNum = 0;
+  secondNum = 0;
 }
 
 function numberHandler(e) {
-  if (
-    displayNumber.value === "0" ||
-    displayNumber.value === "+" ||
-    displayNumber.value === "-" ||
-    displayNumber.value === "÷" ||
-    displayNumber.value === "x"
-  ) {
+  if (userInput.value === "0" || isReset) {
     resetDisplay();
   }
-  displayNumber.value += e.target.textContent;
+  userInput.value += e.target.textContent;
 }
 
 function resetDisplay() {
-  displayNumber.value = "";
+  userInput.value = "";
+  isReset = false;
 }
 
-function operatorHandler(e) {
-  firstNum = displayNumber.value;
-
-  operator = e.target.textContent;
-  displayNumber.value = operator;
+function operatorHandler(operatorInput) {
+  console.log(isReset + "isReset on OperatorHandler");
+  console.log(operator + "Operator on operatorHandler");
+  console.log(operatorInput);
+  if (operator !== undefined) {
+    resultHandler();
+  }
+  firstNum = Number(userInput.value);
+  console.log(firstNum);
+  operator = operatorInput;
+  console.log(operator);
+  isReset = true;
 }
 
-function resultHanlder() {
-  secondNum = Number(displayNumber.value);
-  if (typeof secondNum !== "number") {
-    secondNum = 0;
+function resultHandler() {
+  console.log(isReset);
+  if (operator === undefined || isReset) {
+    return;
   }
 
-  displayNumber.value = operate(operator, firstNum, secondNum);
+  console.log(operator + "operator");
+  console.log(firstNum + "firstNum");
+  console.log(secondNum + "secondNum");
+
+  secondNum = userInput.value;
+  userInput.value = operate(operator, firstNum, secondNum);
+  operator = undefined;
+  console.log(operator + "resultHandler");
 }
 
 function backHandler() {
-  let display = displayNumber.value;
-  displayNumber.value = displayNumber.value.substring(0, display.length - 1);
+  let display = userInput.value;
+  console.log(display.length);
+  console.log(display);
+  if (display.length <= 1) {
+    userInput.value = 0;
+  } else {
+    userInput.value = display.substring(0, display.length - 1);
+  }
 }
 
 function add(firstNum, secondNum) {
