@@ -1,14 +1,13 @@
-@import url("https://fonts.googleapis.com/css?family=Space+Mono");
+@import url('https://fonts.googleapis.com/css?family=Space+Mono');
 
 * {
   box-sizing: border-box;
-  font-family: "Space Mono", serif;
+  font-family: 'Space Mono', serif;
   border-radius: 5px;
 }
 
 html {
-  background-image: url(background.jpg);
-  background-repeat: no-repeat;
+  background: url(background.jpg) no-repeat center center fixed;
   background-size: cover;
 }
 
