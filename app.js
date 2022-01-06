@@ -1,10 +1,10 @@
-const userInput = document.getElementById("user-input");
-const result = document.getElementById("result");
-const numbers = Array.from(document.querySelectorAll(".num"));
-const operators = Array.from(document.querySelectorAll(".operator"));
-const clearButton = document.getElementById("clear");
-const equalButton = document.getElementById("equal");
-const backButton = document.getElementById("back");
+const userInput = document.getElementById('user-input');
+const result = document.getElementById('result');
+const numbers = Array.from(document.querySelectorAll('.num'));
+const operators = Array.from(document.querySelectorAll('.operator'));
+const clearButton = document.getElementById('clear');
+const equalButton = document.getElementById('equal');
+const backButton = document.getElementById('back');
 
 let firstNum = 0;
 let secondNum = 0;
@@ -12,77 +12,73 @@ let operator = undefined;
 let isReset = false;
 
 numbers.forEach((number) => {
-  number.addEventListener("click", numberHandler);
+  number.addEventListener('click', numberHandler);
 });
 
 operators.forEach((operator) => {
-  operator.addEventListener("click", () =>
+  operator.addEventListener('click', () =>
     operatorHandler(operator.textContent)
   );
 });
 
-clearButton.addEventListener("click", clearHandler);
+clearButton.addEventListener('click', clearHandler);
 
-equalButton.addEventListener("click", resultHandler);
+equalButton.addEventListener('click', resultHandler);
 
-backButton.addEventListener("click", backHandler);
+backButton.addEventListener('click', backHandler);
 
 function clearHandler() {
-  result.value = "";
+  result.value = '';
   userInput.value = 0;
   firstNum = 0;
   secondNum = 0;
 }
 
 function numberHandler(e) {
-  if (userInput.value === "0" || isReset) {
+  if (userInput.value === '0' || isReset) {
     resetDisplay();
   }
   userInput.value += e.target.textContent;
 }
 
 function resetDisplay() {
-  userInput.value = "";
+  userInput.value = '';
   isReset = false;
 }
 
 function operatorHandler(operatorInput) {
-  console.log(isReset + "isReset on OperatorHandler");
-  console.log(operator + "Operator on operatorHandler");
-  console.log(operatorInput);
   if (operator !== undefined) {
     resultHandler();
   }
   firstNum = Number(userInput.value);
-  console.log(firstNum);
+
   operator = operatorInput;
   result.value = `${firstNum}${operator}`;
 
-  console.log(operator);
   isReset = true;
 }
 
 function resultHandler() {
-  console.log(isReset);
   if (operator === undefined || isReset) {
     return;
   }
 
-  console.log(operator + "operator");
-  console.log(firstNum + "firstNum");
-  console.log(secondNum + "secondNum");
-
   secondNum = userInput.value;
+
+  if (operator === '÷' && secondNum === '0') {
+    result.value = "You can't divide by 0!";
+    result.style.fontSize = '25px';
+    return;
+  }
+
   userInput.value = operate(operator, firstNum, secondNum);
   result.value = `${firstNum}${operator}${secondNum}=`;
   operator = undefined;
-  console.log(operator + "resultHandler");
 }
 
 function backHandler() {
   let display = userInput.value;
-  console.log(display.length);
-  console.log(display);
+
   if (display.length <= 1) {
     userInput.value = 0;
   } else {
@@ -111,13 +107,13 @@ function operate(operator, firstNum, secondNum) {
   secondNum = Number(secondNum);
 
   switch (operator) {
-    case "+":
+    case '+':
       return add(firstNum, secondNum);
-    case "-":
+    case '-':
       return subtract(firstNum, secondNum);
-    case "x":
+    case 'x':
       return multiply(firstNum, secondNum);
-    case "÷":
+    case '÷':
       return divide(firstNum, secondNum);
   }
 }
